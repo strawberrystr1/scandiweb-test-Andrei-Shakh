@@ -1,0 +1,122 @@
+.header {
+  padding: 0 20px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  &__nav {
+    width: 240px;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    height: 100%;
+    align-items: flex-end;
+
+    &_link {
+      display: block;
+      font-size: 18px;
+      height: 56px;
+
+      &.active {
+        color: #5ece7b;
+        border-bottom: 2px solid #5ece7b;
+      }
+    }
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  & .custom-select {
+    width: 115px;
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    list-style: none;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 170px;
+    align-items: flex-start;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 160%;
+    filter: drop-shadow(0px 4px 25px rgba(63, 66, 68, 0.548));
+
+    & li {
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      padding-left: 15px;
+
+      &:hover {
+        background-color: rgba(122, 119, 119, 0.548);
+      }
+    }
+  }
+
+  & .select-button {
+    cursor: pointer;
+    width: 45px;
+    height: 20px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 5px;
+    background-color: transparent;
+    border: none;
+
+    &::after {
+      content: '‹';
+      font-weight: 900;
+      font-size: 28px;
+      line-height: 0px;
+      transform: rotate(-90deg);
+      display: inline-block;
+      transition: all 0.1s ease-in;
+      transform-origin: center;
+    }
+
+    &.open::after {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__cart {
+    margin-left: 10px;
+    position: relative;
+
+    &_badge {
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      color: white;
+      background-color: black;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      text-align: center;
+      line-height: 18px;
+    }
+
+    &_button {
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      background-image: url('../../../assets/icons/cart.svg');
+      background-color: transparent;
+      border: none;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+}

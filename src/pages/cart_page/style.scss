@@ -1,0 +1,23 @@
+.cart {
+  padding-top: 80px;
+  width: 1100px;
+
+  &__heading {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  &__cards-block {
+    margin-top: 60px;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 50px;
+  }
+
+  &__cards_empty {
+    font-size: 44px;
+  }
+}

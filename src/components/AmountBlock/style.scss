@@ -1,0 +1,35 @@
+.product__description_amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.cart-popup {
+    width: 50%;
+  }
+
+  &.popup {
+    width: 30%;
+    margin: 30px 0;
+  }
+
+  &.cart {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    text-align: center;
+    padding: 0;
+    width: 80px;
+  }
+}
+
+.cart__card_btn {
+  width: 45px;
+  height: 45px;
+  background-color: transparent;
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 34px;
+  border: 1px solid black;
+  cursor: pointer;
+}
