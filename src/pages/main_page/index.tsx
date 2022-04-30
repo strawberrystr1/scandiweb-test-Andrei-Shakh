@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { addToCart, toggleCartOpen } from '../../redux/stateSlices/cartSlice';
 import { RootState } from '../../redux/store';
 import CartPopup from '../../components/CartPopup';
+import { GET_ITEMS } from '../../utils/constants/queries';
 
 class Main extends Component<IMainProps, IMainState> {
   constructor(props: IMainProps) {
@@ -29,38 +30,10 @@ class Main extends Component<IMainProps, IMainState> {
 
   fetchData() {
     const { client, category } = this.props;
-    const GET_ITEMS = gql`
-    query {
-      category(input: { title: "${category}" }) {
-        products {
-          id
-          name
-          inStock
-          brand
-          gallery
-          attributes {
-            name
-            type
-            id
-            items {
-              displayValue
-              value
-              id
-            }
-          }
-          prices {
-            currency {
-              symbol
-            }
-            amount
-          }
-        }
-      }
-    }
-    `;
+
     client
       .query({
-        query: GET_ITEMS,
+        query: GET_ITEMS(category),
       })
       .then((res: ISIngleCategoryResponse) => {
         this.setState({ data: res.data.category.products });
@@ -134,6 +107,7 @@ class Main extends Component<IMainProps, IMainState> {
                   ))}
                 </div>
                 <AmountBlock
+                  id={this.state.data[this.state.itemId].id}
                   className={'popup'}
                   changeAmount={(amount) => this.setState({ ...this.state, amount })}
                   amount={this.state.amount}

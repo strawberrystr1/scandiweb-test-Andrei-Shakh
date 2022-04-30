@@ -14,6 +14,7 @@ import AmountBlock from '../../components/AmountBlock';
 import { connect } from 'react-redux';
 import { addToCart } from '../../redux/stateSlices/cartSlice';
 import { RootState } from '../../redux/store';
+import { GET_PRODUCT_ITEM } from '../../utils/constants/queries';
 
 class ProductPage extends Component<IProductPageProps, IProductPageState> {
   constructor(props: IProductPageProps) {
@@ -28,6 +29,7 @@ class ProductPage extends Component<IProductPageProps, IProductPageState> {
         brand: '',
         description: '',
         id: '',
+        inStock: true,
       },
       choosenPic: 0,
       attributesData: [],
@@ -46,37 +48,9 @@ class ProductPage extends Component<IProductPageProps, IProductPageState> {
   componentDidMount() {
     const { client } = this.props;
     const id = this.getProductID();
-    const GET_PRODUCT_ITEM = gql`
-      {
-        product(id: "${id}") {
-          name
-          gallery
-          description
-          id
-          attributes {
-            name
-            type
-            id
-            items {
-              displayValue
-              value
-              id
-            }
-          }
-          prices {
-            currency {
-              label
-              symbol
-            }
-            amount
-          }
-          brand
-        }
-      }
-    `;
     client
       .query({
-        query: GET_PRODUCT_ITEM,
+        query: GET_PRODUCT_ITEM(id),
       })
       .then((res: IProductResponse) => {
         const newAttributesData = res.data.product.attributes.map((item) => ({
@@ -114,7 +88,9 @@ class ProductPage extends Component<IProductPageProps, IProductPageState> {
           ))}
         </div>
         <div className="product__description">
-          <img src={data.gallery[choosenPic]} alt={data.name} />
+          <div className="img-wrap">
+            <img src={data.gallery[choosenPic]} alt={data.name} />
+          </div>
           <div className="product__description_info">
             <div>
               <p className="product__description_brand">{data.brand}</p>
@@ -128,6 +104,7 @@ class ProductPage extends Component<IProductPageProps, IProductPageState> {
               </p>
             </div>
             <AmountBlock
+              id={this.state.data.id}
               className={'product'}
               amount={this.state.amount}
               changeAmount={(amount) => this.setState({ ...this.state, amount })}
@@ -143,6 +120,7 @@ class ProductPage extends Component<IProductPageProps, IProductPageState> {
                 this.props.addToCart(dataToAdd);
                 this.setState({ amount: 1 });
               }}
+              disabled={!this.state.data.inStock}
             >
               ADD TO CARD
             </button>

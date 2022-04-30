@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ICartPopupProps, ICartPageState, IProductResponse } from '../../interfaces';
 import { toggleCartOpen } from '../../redux/stateSlices/cartSlice';
 import { RootState } from '../../redux/store';
+import { GET_PRODUCT_ITEM } from '../../utils/constants/queries';
 import CartCard from '../CartCard';
 import './style.scss';
 
@@ -24,36 +25,9 @@ class CartPopup extends Component<ICartPopupProps, ICartPageState> {
   fetchData() {
     const { client } = this.props;
     this.props.products.forEach((product, i) => {
-      const GET_PRODUCT_ITEM = gql`
-        {
-          product(id: "${product.id}") {
-            name
-            id
-            gallery
-            attributes {
-              name
-              type
-              id
-              items {
-                displayValue
-                value
-                id
-              }
-            }
-            prices {
-              currency {
-                label
-                symbol
-              }
-              amount
-            }
-            brand
-          }
-        }
-      `;
       client
         .query({
-          query: GET_PRODUCT_ITEM,
+          query: GET_PRODUCT_ITEM(product.id),
         })
         .then((res: IProductResponse) => {
           const toState = {
@@ -122,7 +96,7 @@ class CartPopup extends Component<ICartPopupProps, ICartPageState> {
             </div>
             <div className="cart-popup__btns">
               <Link
-                onClick={() => this.props.toggleCartOpen()}
+                onClick={() => this.props.toggleCartOpen(false)}
                 to="/cart"
                 className="cart-popup__btns_btn view"
               >

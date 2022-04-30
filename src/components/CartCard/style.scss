@@ -4,6 +4,10 @@
   padding-top: 20px;
   border-top: 1px solid #e5e5e5;
 
+  &_left-wrap {
+    width: 60%;
+  }
+
   &_delete-btn {
     width: 40px;
     height: 40px;
@@ -22,7 +26,6 @@
 
   &.cart-popup {
     justify-content: flex-start;
-    flex-direction: column;
   }
 
   &_info-block,
@@ -35,13 +38,17 @@
   }
 
   &_info-block.cart-popup {
-    width: 100%;
+    width: 60%;
     flex-direction: row;
+  }
+
+  &_attributes-block {
+    margin-top: 20px;
+    width: 40%;
   }
 
   &_attributes-block.cart-popup {
     display: inline-flex;
-    flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
     gap: 10px;
@@ -50,7 +57,7 @@
 
   &_amount-block.cart-popup {
     margin-top: 10px;
-    width: 100%;
+    width: 40%;
     justify-content: space-between;
     align-items: flex-start;
     position: relative;
@@ -85,9 +92,33 @@
     width: 30%;
 
     & img {
-      width: 141px;
-      height: 185px;
-      object-fit: contain;
+      width: 200px;
+      max-height: 190px;
+      object-fit: cover;
+    }
+  }
+
+  &__slider {
+    position: relative;
+    max-height: 190px;
+
+    &_btn {
+      position: absolute;
+      top: calc(50% - 10px);
+      color: #2f25b9;
+      font-size: 28px;
+      font-weight: 600;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      &.left {
+        left: 5px;
+      }
+
+      &.right {
+        right: 5px;
+      }
     }
   }
 }

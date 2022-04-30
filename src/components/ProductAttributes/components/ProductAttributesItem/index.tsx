@@ -38,7 +38,7 @@ export default class ProductAttributesItem extends Component<
                   i === this.state.activeIndex ? 'active' : ''
                 } ${this.props.className || ''}`}
                 key={i}
-                onClick={() => this.changeState(name, elem.value, i)}
+                onClick={() => !this.props.disabled && this.changeState(name, elem.value, i)}
               >
                 {elem.value}
               </div>

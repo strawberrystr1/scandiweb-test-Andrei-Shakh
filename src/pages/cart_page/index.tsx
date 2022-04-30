@@ -6,6 +6,7 @@ import { gql } from '@apollo/client';
 import { RootState } from '../../redux/store';
 import { addToCart } from '../../redux/stateSlices/cartSlice';
 import { connect } from 'react-redux';
+import { GET_PRODUCT_ITEM } from '../../utils/constants/queries';
 
 class CartPage extends Component<ICartPage, ICartPageState> {
   constructor(props: ICartPage) {
@@ -20,36 +21,9 @@ class CartPage extends Component<ICartPage, ICartPageState> {
   fetchData() {
     const { client } = this.props;
     this.props.products.forEach((product) => {
-      const GET_PRODUCT_ITEM = gql`
-        {
-          product(id: "${product.id}") {
-            name
-            id
-            gallery
-            attributes {
-              name
-              type
-              id
-              items {
-                displayValue
-                value
-                id
-              }
-            }
-            prices {
-              currency {
-                label
-                symbol
-              }
-              amount
-            }
-            brand
-          }
-        }
-      `;
       client
         .query({
-          query: GET_PRODUCT_ITEM,
+          query: GET_PRODUCT_ITEM(product.id),
         })
         .then((res: IProductResponse) => {
           const toState = {

@@ -27,7 +27,15 @@ export interface IProductResponse {
   data: {
     product: Pick<
       IProduct,
-      'attributes' | 'name' | 'gallery' | 'prices' | 'brand' | 'description' | 'id' | 'prices'
+      | 'attributes'
+      | 'name'
+      | 'gallery'
+      | 'prices'
+      | 'brand'
+      | 'description'
+      | 'id'
+      | 'prices'
+      | 'inStock'
     >;
   };
 }
@@ -61,7 +69,7 @@ export interface IMainProps extends IAPolloConsumer {
   category: string;
   addToCart: ActionCreatorWithPayload<any, string>;
   cartOpen: boolean;
-  toggleCartOpen: ActionCreatorWithoutPayload<string>;
+  toggleCartOpen: ActionCreatorWithPayload<boolean, string>;
   products: ICartStorageItem[];
 }
 
@@ -97,7 +105,7 @@ export interface IProduct {
 
 export type IProductDescription = Pick<
   IProduct,
-  'attributes' | 'name' | 'gallery' | 'prices' | 'brand' | 'description' | 'id'
+  'attributes' | 'name' | 'gallery' | 'prices' | 'brand' | 'description' | 'id' | 'inStock'
 >;
 
 export interface IProductPageState {
@@ -160,7 +168,7 @@ export interface IHeaderProps extends IAPolloConsumer {
   count?: number;
   currency: string;
   changeCurrency: ActionCreatorWithPayload<string, string>;
-  toggleCartOpen: ActionCreatorWithoutPayload<string>;
+  toggleCartOpen: ActionCreatorWithPayload<boolean, string>;
   cartOpen: boolean;
 }
 
@@ -178,6 +186,7 @@ export interface IProductAttributesItemProps {
   changeAttribute: (key: string, value: string) => void;
   choosenAttribute?: { [x: string]: string };
   className?: string;
+  disabled?: boolean;
 }
 
 export interface ICartStorageItem {
@@ -193,8 +202,10 @@ export interface IStorageState {
 }
 
 export interface IAmountProps {
+  id: string;
   className: string;
   changeAmount: (amount: number, remove?: boolean) => void;
+  changeStoreAmount: ActionCreatorWithPayload<IAmountPayload, string>;
   amount: number;
 }
 
@@ -204,6 +215,7 @@ export interface ICartCardState {
     [x: string]: string;
   }[];
   remove: boolean;
+  imageNumber: number;
 }
 
 export interface IReduceAmountPayload {
@@ -212,9 +224,14 @@ export interface IReduceAmountPayload {
   delete?: boolean;
 }
 
+export interface IAmountPayload {
+  id: string;
+  sign: string;
+}
+
 export interface ICartPopupProps {
   products: ICartStorageItem[];
   client: ApolloClient<object>;
   currency: string;
-  toggleCartOpen: ActionCreatorWithoutPayload<string>;
+  toggleCartOpen: ActionCreatorWithPayload<boolean, string>;
 }

@@ -22,12 +22,12 @@ class ItemCard extends Component<ICardData> {
         </div>
       </>
     );
-
     return (
       <div className={className}>
         {!data.inStock && <p className="main__cards_card-out">OUT OF STOCK</p>}
-        {!data.inStock ? <div>{innerCard}</div> : <Link to={`/item/${data.id}`}>{innerCard}</Link>}
+        <Link to={`/item/${data.id}`}>{innerCard}</Link>
         <button
+          disabled={!data.inStock}
           className="main__cards_card_cart-btn"
           onClick={() => this.props.openModal(data.id)}
         ></button>

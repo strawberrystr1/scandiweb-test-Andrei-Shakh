@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { IAmountProps } from '../../interfaces';
-import { reduceAmount } from '../../redux/stateSlices/cartSlice';
+import { changeStoreAmount, reduceAmount } from '../../redux/stateSlices/cartSlice';
 import { RootState } from '../../redux/store';
 import './style.scss';
 
@@ -24,11 +24,13 @@ class AmountBlock extends Component<IAmountProps, { amount: number }> {
       if (this.state.amount + 1 < 20) {
         this.setState((prev) => ({ amount: prev.amount + 1 }));
         this.props.changeAmount(curAmount + 1);
+        this.props.changeStoreAmount({ id: this.props.id, sign: '+' });
       }
     } else {
       if (this.state.amount - 1 > 0) {
         this.setState((prev) => ({ amount: prev.amount - 1 }));
         this.props.changeAmount(curAmount - 1);
+        this.props.changeStoreAmount({ id: this.props.id, sign: '-' });
       }
     }
   }
@@ -52,6 +54,6 @@ const mapStateToProps = (state: RootState) => ({
   products: state.cart.products,
 });
 
-const mapDispatchToProps = { reduceAmount };
+const mapDispatchToProps = { reduceAmount, changeStoreAmount };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AmountBlock);

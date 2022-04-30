@@ -9,18 +9,7 @@ import { RootState } from '../../../redux/store';
 import { connect } from 'react-redux';
 import { changeCurrency, toggleCartOpen } from '../../../redux/stateSlices/cartSlice';
 import ReactDOM from 'react-dom';
-
-const GET_CATEGORIES_AND_CURRENCIES = gql`
-  {
-    currencies {
-      label
-      symbol
-    }
-    categories {
-      name
-    }
-  }
-`;
+import { GET_CATEGORIES_AND_CURRENCIES } from '../../../utils/constants/queries';
 
 class Header extends Component<IHeaderProps, IHeaderState> {
   constructor(props: IHeaderProps) {
@@ -55,7 +44,7 @@ class Header extends Component<IHeaderProps, IHeaderState> {
 
   closeCart(e: React.MouseEvent) {
     const target = e.target as HTMLElement;
-    if (target.classList.contains('cart-popup-wrap__overlay')) this.props.toggleCartOpen();
+    if (target.classList.contains('cart-popup-wrap__overlay')) this.props.toggleCartOpen(false);
   }
 
   render() {
@@ -73,7 +62,10 @@ class Header extends Component<IHeaderProps, IHeaderState> {
         </Link>
         <div className="header__action">
           <button
-            onClick={() => this.setState((prev) => ({ currencyOpen: !prev.currencyOpen }))}
+            onClick={() => {
+              this.setState((prev) => ({ currencyOpen: !prev.currencyOpen }));
+              this.props.toggleCartOpen(false);
+            }}
             className={`select-button ${this.state.currencyOpen ? 'open' : 'close'}`}
           >{`${this.props.currency}`}</button>
           {this.state.currencyOpen && (
@@ -88,7 +80,10 @@ class Header extends Component<IHeaderProps, IHeaderState> {
           <div className="header__cart">
             <button
               className="header__cart_button"
-              onClick={() => this.props.toggleCartOpen()}
+              onClick={() => {
+                this.props.toggleCartOpen(!this.props.cartOpen);
+                this.setState((prev) => ({ currencyOpen: false }));
+              }}
             ></button>
             {this.props.count! > 0 && (
               <span className="header__cart_badge">{this.props.count}</span>

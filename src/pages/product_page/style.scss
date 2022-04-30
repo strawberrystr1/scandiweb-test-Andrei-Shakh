@@ -24,21 +24,28 @@
     margin-left: 40px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 1000px;
-    height: 600px;
+
+    & .img-wrap {
+      max-width: 610px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     &_info {
       width: 31%;
-      height: 100%;
+      height: 610px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      align-self: flex-start;
     }
 
     & img {
-      width: 61%;
-      height: 511px;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     &_brand {
@@ -78,7 +85,7 @@
       }
 
       &_price {
-        margin-top: 10px;
+        margin-top: 20px;
         font-weight: 700;
         font-size: 24px;
         line-height: 18px;
@@ -94,6 +101,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-direction: row;
     }
   }
 
@@ -110,6 +118,11 @@
     color: white;
     border: none;
     cursor: pointer;
+
+    &:disabled {
+      background-color: rgb(90, 85, 85);
+      cursor: inherit;
+    }
 
     &.popup {
       width: 250px;

@@ -2,9 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
 
   &.cart-popup {
-    width: 50%;
+    width: 40%;
   }
 
   &.popup {
@@ -12,12 +13,13 @@
     margin: 30px 0;
   }
 
-  &.cart {
+  &.cart,
+  &.cart-popup {
     display: flex;
-    flex-direction: column;
-    height: 100%;
+    max-height: 190px;
     justify-content: space-between;
     text-align: center;
+    flex-direction: column;
     padding: 0;
     width: 80px;
   }
